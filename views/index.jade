@@ -1,18 +1,44 @@
 extends layout
 
 block content
-  div#LG.container-fluid
+    script(src="javascripts/ang-job.js")
+    div.container-fluid(ng-app="job-app" ng-controller="jobCtrl")
       div.row-fluid
-          div.span12
-              div.btn-group
-                  button.btn(type="button")
-                    em.glyphicon-align-left
-                  button.btn(type="button")
-                    em.glyphicon-align-center
-                  button.btn(type="button")
-                      em.glyphicon-align-right
-                  button.btn(type="button")
-                      em.glyphicon-align-justify
+          div.query-box
+              div.query-header
+                  span 查询任务
+          div.query-row
+              span.hd.l 任务类型
+              div.bd
+                  ul
+                      li.query-item.selected
+                        a(ng-click="setTaskName('all')") 全部
+                      li.query-item.selected
+                        a(ng-click="setTaskName('hour_hermes_stat')") 广告-小时
+                      li.query-item 广告-天
+                      li.query-item 播控-小时
+                      li.query-item 播控-天
+                      li.query-item FunAdx
+          div.query-row
+              span.hd.l 任务时段
+              div.bd
+                  ul
+                      li.query-item 今天
+                      li.query-item 昨天
+                      li.query-item 前3天
+                      li.query-item 前一周
+          div.query-row
+              span.hd.l 任务状态
+              div.bd
+                  ul
+                      li.query-item 失败
+                      li.query-item 进行中
+                      li.query-item 完成
+                      li.query-item 全部
+      div.row-fluid
+          textarea {{requestParams}}
+
+
       div.row-fluid
           div.span12
               table.table
