@@ -11,56 +11,42 @@ block content
               span.hd.l 任务类型
               div.bd
                   ul
-                      li.query-item.selected
-                        a(ng-click="setTaskName('all')") 全部
-                      li.query-item.selected
-                        a(ng-click="setTaskName('hour_hermes_stat')") 广告-小时
-                      li.query-item 广告-天
-                      li.query-item 播控-小时
-                      li.query-item 播控-天
-                      li.query-item FunAdx
+                      li.query-item(ng-class="getSelectedClass(taskName,'all')")
+                          a(ng-click="clickMulitQueryItem(taskName,'all')") 全部
+                      li.query-item(ng-class="getSelectedClass(taskName,'hour_hermes_stat')")
+                          a(ng-click="clickMulitQueryItem(taskName,'hour_hermes_stat')") 广告-小时
+                      li.query-item(ng-class="getSelectedClass(taskName,'day_hermes_stat')")
+                          a(ng-click="clickMulitQueryItem(taskName,'day_hermes_stat')") 广告-天
+                      li.query-item(ng-class="getSelectedClass(taskName,'hour_monitor_stat')")
+                          a(ng-click="clickMulitQueryItem(taskName,'hour_monitor_stat')") 播控-小时
+                      li.query-item(ng-class="getSelectedClass(taskName,'day_monitor_stat')")
+                          a(ng-click="clickMulitQueryItem(taskName,'day_monitor_stat')") 播控-天
+                      li.query-item(ng-class="getSelectedClass(taskName,'hour_s2s_analyse')")
+                          a(ng-click="clickMulitQueryItem(taskName,'hour_s2s_analyse')") FunAdx
           div.query-row
               span.hd.l 任务时段
               div.bd
                   ul
-                      li.query-item 今天
-                      li.query-item 昨天
-                      li.query-item 前3天
-                      li.query-item 前一周
+                      li.query-item(ng-class="getSelectedClass(taskPeriod,'today')")
+                          a(ng-click="clickSingleQueryItem(taskPeriod,'today')") 今天
+                      li.query-item(ng-class="getSelectedClass(taskPeriod,'yesterday')")
+                          a(ng-click="clickSingleQueryItem(taskPeriod,'yesterday')") 昨天
+                      li.query-item(ng-class="getSelectedClass(taskPeriod,'3days')")
+                          a(ng-click="clickSingleQueryItem(taskPeriod,'3days')") 近3天
+                      li.query-item(ng-class="getSelectedClass(taskPeriod,'1weeks')")
+                          a(ng-click="clickSingleQueryItem(taskPeriod,'1weeks')") 近一周
           div.query-row
               span.hd.l 任务状态
               div.bd
                   ul
-                      li.query-item 失败
-                      li.query-item 进行中
-                      li.query-item 完成
-                      li.query-item 全部
+                      li.query-item(ng-class="getSelectedClass(taskStatus,'error')")
+                          a(ng-click="clickMulitQueryItem(taskStatus,'error')") 失败
+                      li.query-item(ng-class="getSelectedClass(taskStatus,'running')")
+                          a(ng-click="clickMulitQueryItem(taskStatus,'running')") 进行中
+                      li.query-item(ng-class="getSelectedClass(taskStatus,'done')")
+                          a(ng-click="clickMulitQueryItem(taskStatus,'done')") 完成
+                      li.query-item(ng-class="getSelectedClass(taskStatus,'all')")
+                          a(ng-click="clickMulitQueryItem(taskStatus,'all')") 全部
       div.row-fluid
           textarea {{requestParams}}
-
-
-      div.row-fluid
-          div.span12
-              table.table
-                  thead
-                      tr
-                          th 编号
-                          th 产品
-                          th 交付时间
-                          th 状态
-                  tbody
-                      tr
-                          td 1
-                          td TB - Monthly
-                          td 01/04/2012
-                          td Default
-                      tr
-                          td 1
-                          td TB - Monthly
-                          td 01/04/2012
-                          td Default
-                      tr
-                          td 1
-                          td TB - Monthly
-                          td 01/04/2012
-                          td Default
+          button.btn-primary(ng-click="doQuery()") Query
