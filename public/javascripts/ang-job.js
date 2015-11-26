@@ -41,15 +41,12 @@ app.controller('jobCtrl', function ($scope, $http) {
 
     $scope.clickSingleQueryItem = function (items, itemName) {
         if (items.indexOf(itemName) === -1) {
-            console.log(itemName);
-            items = [];
+            items.splice(0, items.length);
             items.push(itemName);
         } else {
             var idx = items.indexOf(itemName);
             items.splice(idx, 1);
         }
-        console.log($scope.taskPeriod);
-
     };
 
     $scope.clickTaskStatus = function (items, taskStatusItem) {
@@ -57,19 +54,71 @@ app.controller('jobCtrl', function ($scope, $http) {
     };
 
     $scope.getSelectedClass = function (items, itemName) {
-        //console.log(items.indexOf(itemName) === -1 ? "" : "selected");
         return items.indexOf(itemName) === -1 ? "" : "selected";
     };
 
+
+    var getPeriodTime = function () {
+        var dateStr = "";
+        var getLastDays = function (offset) {
+            var d = new Date();
+            d.setDate(d.getDate() - offset);
+            return d.getFullYear() + "" + (d.getMonth() + 1) + "" + d.getDate()
+        };
+        switch ($scope.taskPeriod[0]) {
+            case "today":
+                dateStr = getLastDays(0);
+                break;
+            case "yesterday":
+                dateStr = getLastDays(1);
+                break;
+            case "3days":
+                dateStr = getLastDays(3);
+                break;
+            case "1weeks":
+                dateStr = getLastDays(7);
+                break;
+        }
+        return dateStr;
+    };
+    /**
+     * 点击查询按钮触发此方法
+     */
     $scope.doQuery = function () {
+        //拼接task_name
         $scope.requestParams.taskName = $scope.taskName.map(function (taskName) {
             return "'" + taskName + "'";
         }).join(",");
 
+        //拼接task_status
         $scope.requestParams.taskStatus = $scope.taskStatus.map(function (taskStatus) {
             return "'" + taskStatus + "'";
         }).join(",");
 
+        //    处理task_period
+        $scope.requestParams.taskPeriod = getPeriodTime();
 
+
+        var req = {"taskName": "'hour_hermes_stat'", "taskStatus": "'running'", "taskPeriod": "20151126"};
+
+        //$http.post('http://www.baidu.com', req).then(function (res) {
+        //    logger.info("返回结果：" + res);
+        //}, function (res) {
+        //    logger.info("错误:" + res);
+        //});
+
+        var jsonStr = JSON.stringify($scope.requestParams);
+
+        $http({
+            method: "POST",
+            url: "/query/qq",
+            headers: {'Content-Type': 'application/json'}, //text/plain;charset=UTF-8
+            data: $scope.requestParams,
+            responseType: "json"
+        }).then(function successCallback(response) {
+            console.log(response.data);
+        }, function errorCallback(response) {
+            console.log(response);
+        });
     };
 });

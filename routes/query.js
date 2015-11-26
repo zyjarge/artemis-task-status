@@ -15,15 +15,27 @@ router.post('/q', function (req, res, next) {
         bodyStr += chunk;
     });
     req.on('end', function () {
-        console.log(bodyStr);
+        logger.info("接收到http请求：" + bodyStr);
+
         var params = JSON.parse(bodyStr);
         jobService.getTasks(params, function (rows) {
             logger.info(rows);
-            res.setHeader("Content-Type","json/text");
+            res.setHeader("Content-Type", "json/text");
             res.json(rows);
         });
-
     });
 });
+
+router.post('/qq', function (req, res, next) {
+    console.log(req.body);
+    if (req.headers["Content-Type"] != "json/text"){
+        res.end("JSON request Only~");
+    }
+    jobService.getTasks(req.body, function (rows) {
+        logger.info(rows);
+        res.setHeader("Content-Type", "json/text");
+        res.json(rows);
+    });
+})
 
 module.exports = router;

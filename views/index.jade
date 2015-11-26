@@ -35,18 +35,19 @@ block content
                           a(ng-click="clickSingleQueryItem(taskPeriod,'3days')") 近3天
                       li.query-item(ng-class="getSelectedClass(taskPeriod,'1weeks')")
                           a(ng-click="clickSingleQueryItem(taskPeriod,'1weeks')") 近一周
+
           div.query-row
               span.hd.l 任务状态
               div.bd
                   ul
+                      li.query-item(ng-class="getSelectedClass(taskStatus,'all')")
+                          a(ng-click="clickMulitQueryItem(taskStatus,'all')") 全部
                       li.query-item(ng-class="getSelectedClass(taskStatus,'error')")
                           a(ng-click="clickMulitQueryItem(taskStatus,'error')") 失败
                       li.query-item(ng-class="getSelectedClass(taskStatus,'running')")
                           a(ng-click="clickMulitQueryItem(taskStatus,'running')") 进行中
                       li.query-item(ng-class="getSelectedClass(taskStatus,'done')")
                           a(ng-click="clickMulitQueryItem(taskStatus,'done')") 完成
-                      li.query-item(ng-class="getSelectedClass(taskStatus,'all')")
-                          a(ng-click="clickMulitQueryItem(taskStatus,'all')") 全部
       div.row-fluid
           textarea {{requestParams}}
           button.btn-primary(ng-click="doQuery()") Query

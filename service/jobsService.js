@@ -9,8 +9,17 @@ var logger = require('../utils/logger.js').getLogger;
 var getTasks = function (params, callback) {
 
     function genSQLByParams(params) {
-        var sql = "select task_name,task_period,task_start_time,task_end_time,task_status from muse_task_status " +
-            "where task_name in (" + params.task_name + ") and task_period >='" + params.task_start_time + "' and task_period <= '" + params.task_end_time + "';";
+
+        var sql = "select task_name,task_period,task_start_time,task_end_time,task_status from muse_task_status where 1=1 ";
+        if (params.taskName && params.taskName.length > 0) {
+            sql += " and task_name in (" + params.taskName + ")";
+        }
+        if (params.taskPeriod && params.taskPeriod.length > 0) {
+            sql += "and task_period >= '" + params.taskPeriod + "'";
+        }
+        if (params.taskStatus && params.taskStatus.length > 0) {
+            sql += "and task_status in (" + params.taskStatus + ")";
+        }
         return sql;
     }
 
@@ -23,7 +32,7 @@ var getTasks = function (params, callback) {
                 logger.info("Get Connection Success!");
                 var sql = genSQLByParams(params);
                 conn.query(sql, function (err, rows) {
-                    logger.info(sql);
+                    logger.info("查询数据库:\t"+sql);
                     if (err) {
                         logger.err("Error:" + err);
                         conn.release();
