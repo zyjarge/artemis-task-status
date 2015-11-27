@@ -81,6 +81,14 @@ app.controller('jobCtrl', function ($scope, $http) {
         }
         return dateStr;
     };
+
+    /**
+     * 通过服务器端返回的json结果渲染表格
+     * @param data
+     */
+    var renderTable = function (data) {
+
+    };
     /**
      * 点击查询按钮触发此方法
      */
@@ -98,25 +106,15 @@ app.controller('jobCtrl', function ($scope, $http) {
         //    处理task_period
         $scope.requestParams.taskPeriod = getPeriodTime();
 
-
-        var req = {"taskName": "'hour_hermes_stat'", "taskStatus": "'running'", "taskPeriod": "20151126"};
-
-        //$http.post('http://www.baidu.com', req).then(function (res) {
-        //    logger.info("返回结果：" + res);
-        //}, function (res) {
-        //    logger.info("错误:" + res);
-        //});
-
-        var jsonStr = JSON.stringify($scope.requestParams);
-
         $http({
             method: "POST",
-            url: "/query/qq",
-            headers: {'Content-Type': 'application/json'}, //text/plain;charset=UTF-8
+            url: "/query/q",
+            headers: {'Content-Type': 'application/json'},
             data: $scope.requestParams,
             responseType: "json"
         }).then(function successCallback(response) {
-            console.log(response.data);
+            $scope.tasks = response.data;
+            console.log($scope.tasks);
         }, function errorCallback(response) {
             console.log(response);
         });
