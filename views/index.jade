@@ -12,49 +12,52 @@ block content
               span.hd.l 任务类型
               div.bd
                   ul
-                      li.query-item(ng-class="getSelectedClass(taskName,'all')")
-                          a(ng-click="clickMulitQueryItem(taskName,'all')") 全部
-                      li.query-item(ng-class="getSelectedClass(taskName,'hour_hermes_stat')")
-                          a(ng-click="clickMulitQueryItem(taskName,'hour_hermes_stat')") 广告-小时
-                      li.query-item(ng-class="getSelectedClass(taskName,'day_hermes_stat')")
-                          a(ng-click="clickMulitQueryItem(taskName,'day_hermes_stat')") 广告-天
-                      li.query-item(ng-class="getSelectedClass(taskName,'hour_monitor_stat')")
-                          a(ng-click="clickMulitQueryItem(taskName,'hour_monitor_stat')") 播控-小时
-                      li.query-item(ng-class="getSelectedClass(taskName,'day_monitor_stat')")
-                          a(ng-click="clickMulitQueryItem(taskName,'day_monitor_stat')") 播控-天
-                      li.query-item(ng-class="getSelectedClass(taskName,'hour_s2s_analyse')")
-                          a(ng-click="clickMulitQueryItem(taskName,'hour_s2s_analyse')") FunAdx
+                      li.query-item
+                          button(type="button" ng-click="clickMulitQueryItem(taskName,'all')" ng-class="getSelectedClass(taskName,'all')").btn 全部
+                      li.query-item
+                          button(type="button" ng-class="getSelectedClass(taskName,'hour_hermes_stat')" ng-click="clickMulitQueryItem(taskName,'hour_hermes_stat')").btn 广告-小时
+                      li.query-item
+                          button(type="button" ng-class="getSelectedClass(taskName,'day_hermes_stat')" ng-click="clickMulitQueryItem(taskName,'day_hermes_stat')").btn 广告-天
+                      li.query-item
+                          button(type="button" ng-class="getSelectedClass(taskName,'hour_monitor_stat')" ng-click="clickMulitQueryItem(taskName,'hour_monitor_stat')").btn 播控-小时
+                      li.query-item
+                          button(type="button" ng-class="getSelectedClass(taskName,'day_monitor_stat')" ng-click="clickMulitQueryItem(taskName,'day_monitor_stat')").btn 播控-天
+                      li.query-item
+                          button(type="button" ng-class="getSelectedClass(taskName,'hour_s2s_analyse')" ng-click="clickMulitQueryItem(taskName,'hour_s2s_analyse')").btn FunAdx
           div.query-row
               span.hd.l 任务时段
               div.bd
                   ul
-                      li.query-item(ng-class="getSelectedClass(taskPeriod,'today')")
-                          a(ng-click="clickSingleQueryItem(taskPeriod,'today')") 今天
-                      li.query-item(ng-class="getSelectedClass(taskPeriod,'yesterday')")
-                          a(ng-click="clickSingleQueryItem(taskPeriod,'yesterday')") 昨天
-                      li.query-item(ng-class="getSelectedClass(taskPeriod,'3days')")
-                          a(ng-click="clickSingleQueryItem(taskPeriod,'3days')") 近3天
-                      li.query-item(ng-class="getSelectedClass(taskPeriod,'1weeks')")
-                          a(ng-click="clickSingleQueryItem(taskPeriod,'1weeks')") 近一周
-
+                      li.query-item
+                          button(type="button" ng-class="getSelectedClass(taskPeriod,'today')" ng-click="clickSingleQueryItem(taskPeriod,'today')").btn 今天
+                      li.query-item
+                          button(type="button" ng-class="getSelectedClass(taskPeriod,'yesterday')" ng-click="clickSingleQueryItem(taskPeriod,'yesterday')").btn 昨天
+                      li.query-item
+                          button(type="button" ng-class="getSelectedClass(taskPeriod,'3days')" ng-click="clickSingleQueryItem(taskPeriod,'3days')").btn 近3天
+                      li.query-item
+                          button(type="button" ng-class="getSelectedClass(taskPeriod,'1weeks')" ng-click="clickSingleQueryItem(taskPeriod,'1weeks')").btn 近一周
           div.query-row
               span.hd.l 任务状态
               div.bd
                   ul
-                      li.query-item(ng-class="getSelectedClass(taskStatus,'all')")
-                          a(ng-click="clickMulitQueryItem(taskStatus,'all')") 全部
-                      li.query-item(ng-class="getSelectedClass(taskStatus,'error')")
-                          a(ng-click="clickMulitQueryItem(taskStatus,'error')") 失败
-                      li.query-item(ng-class="getSelectedClass(taskStatus,'running')")
-                          a(ng-click="clickMulitQueryItem(taskStatus,'running')") 进行中
-                      li.query-item(ng-class="getSelectedClass(taskStatus,'done')")
-                          a(ng-click="clickMulitQueryItem(taskStatus,'done')") 完成
-      div.row-fluid
-          button.btn-primary(ng-click="doQuery()") Query
+                      li.query-item
+                          button(type="button" ng-class="getSelectedClass(taskStatus,'all')" ng-click="clickMulitQueryItem(taskStatus,'all')").btn.btn-info 全部
+                      li.query-item
+                          button(type="button" ng-class="getSelectedClass(taskStatus,'error')" ng-click="clickMulitQueryItem(taskStatus,'error')").btn.btn-danger 失败
+                      li.query-item
+                          button(type="button" ng-class="getSelectedClass(taskStatus,'running')" ng-click="clickMulitQueryItem(taskStatus,'running')").btn.btn-warning 进行中
+                      li.query-item
+                          button(type="button" ng-class="getSelectedClass(taskStatus,'done')" ng-click="clickMulitQueryItem(taskStatus,'done')").btn.btn-success 完成
+          div.query-row
+              span.hd.l 查询
+              div.bd
+                  ul
+                      li.query-item
+                          button(type="button" ng-click="doQuery()").btn.btn-primary 查询
 
         div.container-fluid(ng-app="job-app" ng-controller="jobCtrl")
             div.row-fluid
-                table
+                table.table
                     thead
                         tr
                             td 任务名称
@@ -63,10 +66,10 @@ block content
                             td 任务结束时间
                             td 任务状态
                     tbody
-                        tr(ng-repeat="task in tasks")
+                        tr(ng-repeat="task in tasks" ng-class="getRowClass(task.task_status)")
                             td {{task.task_name}}
                             td {{task.task_period}}
-                            td {{task.start_time}}
-                            td {{task.end_time}}
+                            td {{task.task_start_time}}
+                            td {{task.task_end_time}}
                             td {{task.task_status}}
 

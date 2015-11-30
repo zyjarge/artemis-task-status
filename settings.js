@@ -8,9 +8,9 @@ module.exports = {
     context: '/task_status',
     db_info: {
         host: '192.168.8.101',
-        user: '****',
-        password: '****',
-        database: '****',
+        user: 'viewer',
+        password: 'PL3pwc3gNF',
+        database: 'microlens',
         port: 3314,
         debug: false
     },

@@ -54,7 +54,9 @@ app.controller('jobCtrl', function ($scope, $http) {
     };
 
     $scope.getSelectedClass = function (items, itemName) {
-        return items.indexOf(itemName) === -1 ? "" : "selected";
+        console.log(items);
+        console.log(itemName);
+        return items.indexOf(itemName) === -1 ? "" : "active";
     };
 
 
@@ -86,8 +88,23 @@ app.controller('jobCtrl', function ($scope, $http) {
      * 通过服务器端返回的json结果渲染表格
      * @param data
      */
-    var renderTable = function (data) {
-
+    $scope.getRowClass = function (status) {
+        var ret = "";
+        switch (status){
+            case "running" :
+                ret = "info";
+                break;
+            case "error":
+                ret = "danger";
+                break;
+            case "done":
+                ret = "success";
+                break;
+            default :
+                ret="danger";
+                break;
+        }
+        return ret;
     };
     /**
      * 点击查询按钮触发此方法
