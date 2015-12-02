@@ -14,8 +14,8 @@ var getTasks = function (params, callback) {
         if (params.taskName && params.taskName.length > 0) {
             sql += " and task_name in (" + params.taskName + ")";
         }
-        if (params.taskPeriod && params.taskPeriod.length > 0) {
-            sql += "and task_period >= '" + params.taskPeriod + "'";
+        if (params.taskPeriod) {
+            sql += "and date(left(task_period,8)) > (NOW() - INTERVAL "+params.taskPeriod+" DAY)";
         }
         if (params.taskStatus && params.taskStatus.length > 0) {
             sql += "and task_status in (" + params.taskStatus + ")";

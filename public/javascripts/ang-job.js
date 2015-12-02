@@ -11,20 +11,6 @@ app.controller('jobCtrl', function ($scope, $http) {
     $scope.taskStatus = [];
 
     /**
-     * 设置task_name。
-     * task_name format： "'hour_hermes_stat','day_hermes_stat','hour_monitor_stat','day_monitor_stat'"
-     *
-     * @param name
-     */
-    $scope.setTaskNameParams = function () {
-        angular.forEach($scope.taskName, function (key, val) {
-            if (val != undefined) {
-                console.log("aaa:" + key);
-            }
-        });
-    };
-
-    /**
      * 多选筛选框
      * @param itemName
      */
@@ -54,31 +40,24 @@ app.controller('jobCtrl', function ($scope, $http) {
     };
 
     $scope.getSelectedClass = function (items, itemName) {
-        console.log(items);
-        console.log(itemName);
         return items.indexOf(itemName) === -1 ? "" : "active";
     };
 
 
     var getPeriodTime = function () {
         var dateStr = "";
-        var getLastDays = function (offset) {
-            var d = new Date();
-            d.setDate(d.getDate() - offset);
-            return d.getFullYear() + "" + (d.getMonth() + 1) + "" + d.getDate()
-        };
         switch ($scope.taskPeriod[0]) {
             case "today":
-                dateStr = getLastDays(0);
+                dateStr = 1;
                 break;
             case "yesterday":
-                dateStr = getLastDays(1);
+                dateStr = 2;
                 break;
             case "3days":
-                dateStr = getLastDays(3);
+                dateStr = 3;
                 break;
             case "1weeks":
-                dateStr = getLastDays(7);
+                dateStr = 7;
                 break;
         }
         return dateStr;
@@ -122,6 +101,8 @@ app.controller('jobCtrl', function ($scope, $http) {
 
         //    处理task_period
         $scope.requestParams.taskPeriod = getPeriodTime();
+
+        console.log($scope.requestParams);
 
         $http({
             method: "POST",
