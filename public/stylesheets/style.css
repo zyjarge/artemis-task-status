@@ -46,6 +46,11 @@ div{
     margin-left: 70px;
 }
 
+.query-row .hd{
+    font-size: small;
+    /*padding-right: 20px;*/
+}
+
 .query-item{
     display: inline-block;
     margin: 0 13px;
@@ -53,16 +58,23 @@ div{
 }
 
 .query-item a {
-    display: block;
-    height: 20px;
-    line-height: 20px;
-    padding: 0 6px;
-    font-size: 12px;
+    border-radius: 5px 5px 5px 5px;
+    display: inline-block;
+    padding: 8px 10px;
+    font-size: large;
+    border: 1px solid #bbbbbb;
+    text-decoration: none;
+    cursor: pointer;
 }
 
-.query-item.selected{
-    background: #C97BFF;
-    color: #fff;
+.query-item a:hover {
+    text-decoration: none;
+}
+
+.query-item .active{
+    box-shadow: 3px 2px 3px #999 inset;
+    color: #4dc71f;
+    border-color: #5cb85c ;
 }
 
 

@@ -24,6 +24,7 @@ var getTasks = function (params, callback) {
     }
 
     function dbQuery(params, callback) {
+
         db_pool.getConnection(function (err, conn, cb) {
             if (err) {
                 logger.error("Error: " + err);
@@ -37,6 +38,7 @@ var getTasks = function (params, callback) {
                         logger.err("Error:" + err);
                         conn.release();
                     }
+                    conn.release();
                     callback(rows);
                 });
             }
